@@ -1,8 +1,12 @@
-import { Sequelize } from "sequelize";
-import { Environments } from "../models/environment";
-import { config } from "./databaseConfig";
+import 'dotenv/config';
+import { Sequelize } from 'sequelize';
 
-const environment: keyof Environments =
-  (process.env.environment as keyof Environments) || "development";
+const DB_USERNAME = process.env.DB_USERNAME || 'dave'; /* no se por que no esta funcionando */
+const DB_DATABASE = process.env.DB_DATABASE || 'nombre_sistema';
 
-export const sequelize = new Sequelize(config[environment]);
+export const sequelize = new Sequelize(DB_DATABASE, DB_USERNAME, process.env.DB_PASSWORD, {
+    host: 'dbservice',
+    password: process.env.DB_PASSWORD,
+    dialect: 'mysql',
+    port: 3306,
+});
