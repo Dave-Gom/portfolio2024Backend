@@ -3,4 +3,5 @@ export interface UserInterface {
     birthDate: Date;
     about: string;
     email: string;
+    apodo?: string;
 }

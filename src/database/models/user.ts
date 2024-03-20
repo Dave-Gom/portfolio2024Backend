@@ -7,6 +7,7 @@ const User = sequelize.define<Model, UserInterface>('user', {
     birthDate: { type: DataTypes.DATE, allowNull: false },
     name: { type: DataTypes.STRING, allowNull: false },
     email: { type: DataTypes.STRING, validate: { isEmail: true }, unique: true },
+    apodo: { type: DataTypes.STRING },
 });
 
 export { User };
