@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import { sequelize } from './database/database';
+import { loadRoutes } from './routes';
 
 const main = async () => {
     const app = express();
@@ -11,6 +12,12 @@ const main = async () => {
         })
     );
     app.use(express.json());
+
+    await sequelize.sync();
+
+    const rutas = await loadRoutes();
+
+    app.use(rutas);
 
     await sequelize.sync();
 
