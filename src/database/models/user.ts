@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { UserInterface } from '../../models/user';
-import { sequelize } from '../sequelize';
+import { sequelize } from '../database';
 
 const User = sequelize.define<Model, UserInterface>('user', {
     about: { type: DataTypes.STRING },

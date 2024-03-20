@@ -1,6 +1,6 @@
 import cors from 'cors';
 import express from 'express';
-import { sequelize } from './database/sequelize';
+import { sequelize } from './database/database';
 
 const main = async () => {
     const app = express();
