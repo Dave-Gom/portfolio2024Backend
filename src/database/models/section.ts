@@ -5,17 +5,24 @@ import { Image } from './image';
 import { Text } from './text';
 import { Title } from './title';
 
-const Section = sequelize.define<Model, SectionInterface>('section', {
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
+const Section = sequelize.define<Model, SectionInterface>(
+    'section',
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
     },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-});
+    {
+        paranoid: true,
+        timestamps: true,
+    }
+);
 
 Section.hasMany(Text);
 Section.hasMany(Title);

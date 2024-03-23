@@ -16,7 +16,10 @@ const Page = sequelize.define<Model, PageInterface>(
             allowNull: false,
         },
     },
-    { paranoid: true }
+    {
+        paranoid: true,
+        timestamps: true,
+    }
 );
 
 Page.hasMany(Section);
