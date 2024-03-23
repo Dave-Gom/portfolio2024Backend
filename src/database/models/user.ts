@@ -15,6 +15,7 @@ const User = sequelize.define<Model, UserInterface>(
         name: { type: DataTypes.STRING, allowNull: false },
         email: { type: DataTypes.STRING, validate: { isEmail: true }, unique: true },
         apodo: { type: DataTypes.STRING },
+        password: { type: DataTypes.STRING, allowNull: false },
     },
     {
         paranoid: true,

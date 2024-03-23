@@ -5,4 +5,5 @@ export interface UserInterface {
     about: string;
     email: string;
     apodo?: string;
+    password: string;
 }
