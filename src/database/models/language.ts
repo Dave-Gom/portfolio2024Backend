@@ -7,7 +7,7 @@ const Language = sequelize.define<Model, LaguageInterface>('laguages', {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-    }
+    },
     code: {
         type: DataTypes.STRING,
         allowNull: false,
