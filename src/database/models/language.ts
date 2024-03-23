@@ -3,6 +3,11 @@ import { LaguageInterface } from '../../models/language';
 import { sequelize } from '../database';
 
 const Language = sequelize.define<Model, LaguageInterface>('laguages', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    }
     code: {
         type: DataTypes.STRING,
         allowNull: false,

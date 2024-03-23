@@ -6,6 +6,11 @@ import { Section } from './section';
 const Page = sequelize.define<Model, PageInterface>(
     'pages',
     {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
