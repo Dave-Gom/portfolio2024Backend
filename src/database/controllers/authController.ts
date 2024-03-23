@@ -7,7 +7,7 @@ export const RegisterController = async ({ body }: Request, res: Response) => {
     try {
         const responseRegister: ServicesResponse = await registerNewUser(body);
         if (responseRegister.type === 'success') {
-            const logint = await loginUser(body);
+            const logint = await loginUser({ email: body.email, password: body.password });
             if (logint.type === 'success') {
                 res.send(logint.payload);
             } else {
