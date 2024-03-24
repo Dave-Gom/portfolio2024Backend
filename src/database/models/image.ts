@@ -10,8 +10,8 @@ const Image = sequelize.define<Model, ImageInterface>(
             autoIncrement: true,
             primaryKey: true,
         },
-        url: { type: DataTypes.STRING, defaultValue: '', allowNull: true, validate: { isUrl: true } },
-        tag: { type: DataTypes.STRING, allowNull: false },
+        url: { type: DataTypes.STRING, defaultValue: '', validate: { isUrl: true }, unique: true },
+        tag: { type: DataTypes.STRING, allowNull: false, unique: true },
     },
     {
         paranoid: true,

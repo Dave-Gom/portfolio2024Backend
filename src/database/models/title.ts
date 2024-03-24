@@ -11,7 +11,7 @@ const Title = sequelize.define<Model, TitleInterface>(
             primaryKey: true,
         },
         text: { type: DataTypes.STRING, defaultValue: '', allowNull: true },
-        tag: { type: DataTypes.STRING, allowNull: false },
+        tag: { type: DataTypes.STRING, allowNull: false, unique: true },
         lang: { type: DataTypes.STRING, allowNull: false },
     },
     {

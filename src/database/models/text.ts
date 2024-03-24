@@ -11,7 +11,7 @@ const Text = sequelize.define<Model, TextInterface>(
             primaryKey: true,
         },
         text: { type: DataTypes.TEXT, defaultValue: '', allowNull: true },
-        tag: { type: DataTypes.STRING, allowNull: false },
+        tag: { type: DataTypes.STRING, allowNull: false, unique: true },
         lang: { type: DataTypes.STRING, allowNull: false },
     },
     {
