@@ -75,8 +75,8 @@ export const updateSection = async ({ body, params }: Request, res: Response) =>
 export const deleteSection = async ({ body, params }: Request, res: Response) => {
     try {
         const { id } = params;
-        const section = await Section.destroy({ where: { id } });
-        res.send({ message: 'eliminado', section: section });
+        const text = await Section.destroy({ where: { id } });
+        res.send({ message: 'eliminado', section: text });
         return;
     } catch (error) {
         return handleHttp(res, `${error}`, 500);
