@@ -73,7 +73,7 @@ export const updatePage = async ({ body, params }: Request, res: Response) => {
     }
 };
 
-export const deletePage = async ({ body, params }: Request, res: Response) => {
+export const deletePage = async ({ params }: Request, res: Response) => {
     try {
         const { id } = params;
         const page = await Page.destroy({ where: { id } });

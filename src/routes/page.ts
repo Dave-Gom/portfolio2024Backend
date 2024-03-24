@@ -7,7 +7,7 @@ const router = Router();
 router.get('/', readPages);
 router.get('/:id', readpageById);
 router.post('/', checkSession, createPage);
-router.put('/', checkSession, updatePage);
-router.delete('/', checkSession, deletePage);
+router.put('/:id', checkSession, updatePage);
+router.delete('/:id', checkSession, deletePage);
 
 export { router };
