@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { TextInterface } from '../../models/text';
 import { sequelize } from '../database';
+import { Language } from './language';
 
 const Text = sequelize.define<Model, TextInterface>(
     'texts',
@@ -12,12 +13,13 @@ const Text = sequelize.define<Model, TextInterface>(
         },
         text: { type: DataTypes.TEXT, defaultValue: '', allowNull: true },
         tag: { type: DataTypes.STRING, allowNull: false, unique: true },
-        lang: { type: DataTypes.STRING, allowNull: false },
     },
     {
         paranoid: true,
         timestamps: true,
     }
 );
+
+Text.belongsTo(Language);
 
 export { Text };

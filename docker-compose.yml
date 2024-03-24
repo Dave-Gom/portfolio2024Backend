@@ -17,6 +17,8 @@ services:
         tty: false
 
     apiservice:
+        depends_on:
+            - dbservice
         tty: true
         build: .
         ports:
