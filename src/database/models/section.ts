@@ -1,4 +1,4 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataType, Model } from 'sequelize-typescript';
 import { SectionInterface } from '../../models/section';
 import { sequelize } from '../database';
 import { Image } from './image';
@@ -9,12 +9,12 @@ const Section = sequelize.define<Model, SectionInterface>(
     'section',
     {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataType.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
         name: {
-            type: DataTypes.STRING,
+            type: DataType.STRING,
             allowNull: false,
         },
     },
