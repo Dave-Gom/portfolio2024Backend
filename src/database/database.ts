@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 
 const DB_USERNAME = process.env.DB_USERNAME || 'dave'; /* no se por que no esta funcionando */
 const DB_DATABASE = process.env.DB_DATABASE || 'nombre_sistema';

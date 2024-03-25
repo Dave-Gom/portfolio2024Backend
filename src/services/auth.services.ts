@@ -1,4 +1,4 @@
-import { Model } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { User } from '../database/models/user';
 import { generateToken } from '../helpers/jdt.handler';
 import { encript, verify } from '../helpers/password.handler';

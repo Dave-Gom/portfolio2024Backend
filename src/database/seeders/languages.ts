@@ -1,4 +1,4 @@
-import { Model } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 import { LaguageInterface } from '../../models/language';
 import { Language } from '../models/language';
 
