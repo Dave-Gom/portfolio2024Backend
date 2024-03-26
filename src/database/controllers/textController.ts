@@ -104,7 +104,7 @@ export const addToSection = async ({ body, params }: Request, res: Response) => 
         if (texto.addSection && seccion.addText) {
             await seccion.addText(texto);
             await texto.reload({ include: [Section] });
-            res.send({ texto });
+            res.send(texto);
             return;
         }
 

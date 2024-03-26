@@ -102,7 +102,7 @@ export const addText = async ({ body, params }: Request, res: Response) => {
         if (texto.addSection && seccion.addText) {
             await seccion.addText(texto);
             await seccion.reload({ include: [Text] });
-            res.send({ seccion });
+            res.send(seccion);
             return;
         }
 
@@ -127,7 +127,7 @@ export const addTitle = async ({ body, params }: Request, res: Response) => {
         if (titulo.addSection && seccion.addTitle) {
             await seccion.addTitle(titulo);
             await seccion.reload({ include: [Title] });
-            res.send({ seccion });
+            res.send(seccion);
             return;
         }
 
