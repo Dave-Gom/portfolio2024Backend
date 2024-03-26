@@ -18,6 +18,7 @@ export const createPost = async ({ body }: Request, res: Response) => {
         if (idioma) {
             const post = await Post.create<PostInstance>({ ...body, languageId: idioma.dataValues.id });
             if (post) {
+                await post.reload({ include: [Language] });
                 res.send(post);
                 return;
             }
