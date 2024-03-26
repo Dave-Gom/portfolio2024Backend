@@ -1,23 +1,30 @@
 import { Request, Response } from 'express';
+import { Model } from 'sequelize';
 import { handleHttp } from '../../helpers/error.handler';
 import { ImageInstance } from '../../models/image';
+import { LanguageInterface } from '../../models/language';
 import { PostInstance } from '../../models/post';
 import { TextInstance } from '../../models/text';
 import { TitleInstance } from '../../models/title';
 import { Image } from '../models/image';
+import { Language } from '../models/language';
 import { Post } from '../models/posts';
 import { Text } from '../models/text';
 import { Title } from '../models/title';
 
 export const createPost = async ({ body }: Request, res: Response) => {
     try {
-        const post = await Post.create<PostInstance>(body);
-        if (post) {
-            res.send(post);
-            return;
-        }
+        const idioma = await Language.findByPk<Model<LanguageInterface>>(body.language, { include: [Post] });
+        if (idioma) {
+            const post = await Post.create<PostInstance>({ ...body, languageId: idioma.dataValues.id });
+            if (post) {
+                res.send(post);
+                return;
+            }
 
-        return handleHttp(res, undefined, 500);
+            return handleHttp(res, undefined, 204);
+        }
+        return handleHttp(res, `Idioma incorrecto`, 400);
     } catch (e) {
         handleHttp(res, `ERROR_POST_POST: ${e}`);
     }
