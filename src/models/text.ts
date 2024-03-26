@@ -1,5 +1,6 @@
 import { Model } from 'sequelize';
 import { LanguageInterface } from './language';
+import { PostInstance } from './post';
 import { SectionInstance } from './section';
 
 export interface TextInterface {
@@ -23,4 +24,14 @@ export interface TextInstance extends Model<TextInterface> {
     removeSection?: (val: SectionInstance) => Promise<TextInstance>;
     removeSections?: (val: SectionInstance[]) => Promise<TextInstance>;
     createSection?: (val: SectionInstance) => Promise<TextInstance>;
+    getPosts?: () => Promise<PostInstance[]>;
+    countPosts?: () => Promise<number>;
+    hasPost?: (val: PostInstance) => Promise<boolean>;
+    hasPosts?: (val: PostInstance[]) => Promise<boolean>;
+    setPosts?: (val: PostInstance | PostInstance[]) => Promise<TextInstance>;
+    addPost?: (val: PostInstance) => Promise<TextInstance>;
+    addPosts?: (val: PostInstance[]) => Promise<TextInstance>;
+    removePost?: (val: PostInstance) => Promise<TextInstance>;
+    removePosts?: (val: PostInstance[]) => Promise<TextInstance>;
+    createPost?: (val: PostInstance) => Promise<TextInstance>;
 }

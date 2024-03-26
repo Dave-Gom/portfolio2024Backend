@@ -47,7 +47,7 @@ export const createPage = async ({ body }: Request, res: Response) => {
             return;
         }
 
-        return handleHttp(res, undefined, 204);
+        return handleHttp(res, undefined, 500);
     } catch (error) {
         return handleHttp(res, `${error}`, 500);
     }

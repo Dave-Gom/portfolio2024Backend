@@ -1,5 +1,6 @@
 import { Model } from 'sequelize';
 import { LanguageInterface } from './language';
+import { PostInstance } from './post';
 import { TextInterface } from './text';
 
 export interface TitleInterface extends TextInterface {}
@@ -18,4 +19,14 @@ export interface TitleInstance extends Model<TitleInstance> {
     addSections?: (obj: Model<LanguageInterface>[]) => Promise<TitleInstance>;
     removeSection?: (obj: Model<LanguageInterface>) => Promise<TitleInstance>;
     removeSections?: (obj: Model<LanguageInterface>[]) => Promise<TitleInstance>;
+    getPosts?: () => Promise<PostInstance[]>;
+    countPosts?: () => Promise<number>;
+    hasPost?: (val: PostInstance) => Promise<boolean>;
+    hasPosts?: (val: PostInstance[]) => Promise<boolean>;
+    setPosts?: (val: PostInstance | PostInstance[]) => Promise<TitleInstance>;
+    addPost?: (val: PostInstance) => Promise<TitleInstance>;
+    addPosts?: (val: PostInstance[]) => Promise<TitleInstance>;
+    removePost?: (val: PostInstance) => Promise<TitleInstance>;
+    removePosts?: (val: PostInstance[]) => Promise<TitleInstance>;
+    createPost?: (val: PostInstance) => Promise<TitleInstance>;
 }
