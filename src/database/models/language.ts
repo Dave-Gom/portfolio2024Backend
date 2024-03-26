@@ -1,4 +1,4 @@
-import { DataType, Model } from 'sequelize-typescript';
+import { DataTypes, Model } from 'sequelize';
 import { LanguageInterface } from '../../models/language';
 import { sequelize } from '../database';
 
@@ -6,16 +6,16 @@ const Language = sequelize.define<Model, LanguageInterface>(
     'languages',
     {
         id: {
-            type: DataType.INTEGER,
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
         code: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         name: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
         },
     },

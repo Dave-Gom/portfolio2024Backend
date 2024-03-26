@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { Model } from 'sequelize-typescript';
+import { Model } from 'sequelize';
 import { virifyToken } from '../../helpers/jdt.handler';
 import { UserInterface } from '../../models/user';
 import { User } from '../models/user';

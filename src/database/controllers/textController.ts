@@ -1,13 +1,42 @@
 import { Request, Response } from 'express';
 import { Model } from 'sequelize';
 import { handleHttp } from '../../helpers/error.handler';
-import { TextInterface } from '../../models/text';
+import { LanguageInterface } from '../../models/language';
+import { TextInstance, TextInterface } from '../../models/text';
+import { Language } from '../models/language';
 import { Text } from '../models/text';
 
 export const createText = async ({ body }: Request, res: Response) => {
     try {
-        const newText = await Text.create<Model<TextInterface>>(body);
-        if (newText) {
+        console.log(1);
+        const hola = await Language.findByPk<Model<LanguageInterface>>(body.language, { include: [Text] });
+        console.log(2);
+        const newText = await Text.create<TextInstance>(body);
+        console.log(3);
+        const nueveTexto = await newText.reload({ include: [Language] });
+        console.log(4);
+        console.log(Text.associations);
+        console.log(Language.associations);
+
+        //@ts-ignore
+        if (nueveTexto.addlanguage) {
+            console.log('nuevoTexto');
+        }
+
+        console.log(
+            Object.getOwnPropertyDescriptors(nueveTexto),
+            Object.getOwnPropertyNames(nueveTexto),
+            Object.getOwnPropertySymbols(nueveTexto),
+            Object.getPrototypeOf(nueveTexto)
+        );
+
+        //@ts-ignore
+        if (nueveTexto.$set) {
+            console.log('existe $set');
+        }
+
+        if (nueveTexto && hola && nueveTexto.setLanguage) {
+            await nueveTexto.setLanguage(hola);
             res.send(newText);
             return;
         }

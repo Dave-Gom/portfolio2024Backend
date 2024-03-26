@@ -1,4 +1,4 @@
-import { Model } from 'sequelize-typescript';
+import { Model } from 'sequelize';
 import { LanguageInterface } from './language';
 
 export interface TextInterface {
@@ -9,5 +9,7 @@ export interface TextInterface {
 
 export interface TextInstance extends Model<TextInterface> {
     language?: Model<LanguageInterface>;
-    addLanguage?: (obj: Model<LanguageInterface>) => Promise<TextInstance>;
+    getLanguage?: (obj: Model<LanguageInterface>) => Promise<TextInstance>;
+    setLanguage?: (obj: Model<LanguageInterface>) => Promise<TextInstance>;
+    createLanguage?: (obj: Model<LanguageInterface>) => Promise<TextInstance>;
 }

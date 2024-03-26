@@ -1,4 +1,4 @@
-import { DataType, Model } from 'sequelize-typescript';
+import { DataTypes, Model } from 'sequelize';
 import { TextInterface } from '../../models/text';
 import { sequelize } from '../database';
 
@@ -6,12 +6,12 @@ const Text = sequelize.define<Model, TextInterface>(
     'texts',
     {
         id: {
-            type: DataType.INTEGER,
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-        text: { type: DataType.TEXT, defaultValue: '', allowNull: true },
-        tag: { type: DataType.STRING, allowNull: false, unique: true },
+        text: { type: DataTypes.TEXT, defaultValue: '', allowNull: true },
+        tag: { type: DataTypes.STRING, allowNull: false, unique: true },
     },
     {
         paranoid: true,

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Model } from 'sequelize-typescript';
+import { Model } from 'sequelize';
 import { handleHttp } from '../../helpers/error.handler';
 import { ImageInterface } from '../../models/image';
 import { Image } from '../models/image';

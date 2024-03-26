@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Model } from 'sequelize-typescript';
+import { Model } from 'sequelize';
 import { handleHttp } from '../../helpers/error.handler';
 import { SectionInterface } from '../../models/section';
 import { Section } from '../models/section';

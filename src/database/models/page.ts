@@ -1,4 +1,4 @@
-import { DataType, Model } from 'sequelize-typescript';
+import { DataTypes, Model } from 'sequelize';
 import { PageInterface } from '../../models/page';
 import { sequelize } from '../database';
 
@@ -6,12 +6,12 @@ const Page = sequelize.define<Model, PageInterface>(
     'pages',
     {
         id: {
-            type: DataType.INTEGER,
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
         name: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
         },
     },
