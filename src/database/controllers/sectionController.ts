@@ -2,10 +2,12 @@ import { Request, Response } from 'express';
 import { Model } from 'sequelize';
 import { handleHttp } from '../../helpers/error.handler';
 import { ImageInstance } from '../../models/image';
+import { PageInstance } from '../../models/page';
 import { SectionInstance, SectionInterface } from '../../models/section';
 import { TextInstance } from '../../models/text';
 import { TitleInstance } from '../../models/title';
 import { Image } from '../models/image';
+import { Page } from '../models/page';
 import { Section } from '../models/section';
 import { Text } from '../models/text';
 import { Title } from '../models/title';
@@ -154,6 +156,31 @@ export const addImage = async ({ body, params }: Request, res: Response) => {
         if (imagen.addSection && seccion.addImage) {
             await seccion.addImage(imagen);
             await seccion.reload({ include: [Image] });
+            res.send(seccion);
+            return;
+        }
+
+        return handleHttp(res, 'No associations', 400);
+    } catch (error) {
+        return handleHttp(res, `${error}`, 500);
+    }
+};
+
+export const addToPage = async ({ body, params }: Request, res: Response) => {
+    try {
+        const { sectionId } = body;
+        const { pageId } = params;
+
+        const pagina = await Page.findByPk<PageInstance>(pageId, { include: [Section] });
+        const seccion = await Section.findByPk<SectionInstance>(sectionId, { include: [Page] });
+
+        if (!pagina || !seccion) {
+            return handleHttp(res, 'Id incompatible', 400);
+        }
+
+        if (pagina.addSection && seccion.addPage) {
+            await seccion.addPage(pagina);
+            await seccion.reload({ include: [Page] });
             res.send(seccion);
             return;
         }

@@ -3,6 +3,7 @@ import {
     addImage,
     addText,
     addTitle,
+    addToPage,
     createSection,
     deleteSection,
     readSectionById,
@@ -21,5 +22,6 @@ router.delete('/:id', checkSession, deleteSection);
 router.put('/addText/:textId', checkSession, addText);
 router.put('/addTitle/:titleId', checkSession, addTitle);
 router.put('/addImage/:imageId', checkSession, addImage);
+router.put('/addToPage/:pageId', checkSession, addToPage);
 
 export { router };
