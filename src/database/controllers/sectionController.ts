@@ -3,8 +3,10 @@ import { Model } from 'sequelize';
 import { handleHttp } from '../../helpers/error.handler';
 import { SectionInstance, SectionInterface } from '../../models/section';
 import { TextInstance } from '../../models/text';
+import { TitleInstance } from '../../models/title';
 import { Section } from '../models/section';
 import { Text } from '../models/text';
+import { Title } from '../models/title';
 
 export const readSections = async (req: Request, res: Response) => {
     try {
@@ -100,6 +102,31 @@ export const addText = async ({ body, params }: Request, res: Response) => {
         if (texto.addSection && seccion.addText) {
             await seccion.addText(texto);
             await seccion.reload({ include: [Text] });
+            res.send({ seccion });
+            return;
+        }
+
+        return handleHttp(res, 'No associations', 400);
+    } catch (error) {
+        return handleHttp(res, `${error}`, 500);
+    }
+};
+
+export const addTitle = async ({ body, params }: Request, res: Response) => {
+    try {
+        const { sectionId } = body;
+        const { titleId } = params;
+
+        const titulo = await Title.findByPk<TitleInstance>(titleId, { include: [Section] });
+        const seccion = await Section.findByPk<SectionInstance>(sectionId, { include: [Text] });
+
+        if (!titulo || !seccion) {
+            return handleHttp(res, 'Id incompatible', 400);
+        }
+
+        if (titulo.addSection && seccion.addTitle) {
+            await seccion.addTitle(titulo);
+            await seccion.reload({ include: [Title] });
             res.send({ seccion });
             return;
         }

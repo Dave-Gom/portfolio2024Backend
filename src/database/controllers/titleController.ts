@@ -2,8 +2,10 @@ import { Request, Response } from 'express';
 import { Model } from 'sequelize';
 import { handleHttp } from '../../helpers/error.handler';
 import { LanguageInterface } from '../../models/language';
+import { SectionInstance } from '../../models/section';
 import { TitleInstance, TitleInterface } from '../../models/title';
 import { Language } from '../models/language';
+import { Section } from '../models/section';
 import { Text } from '../models/text';
 import { Title } from '../models/title';
 
@@ -84,6 +86,31 @@ export const deletTitle = async ({ body, params }: Request, res: Response) => {
             where: { id },
         });
         res.send({ message: 'eliminado', section: updatedTitle });
+    } catch (error) {
+        return handleHttp(res, `${error}`, 500);
+    }
+};
+
+export const addToSection = async ({ body, params }: Request, res: Response) => {
+    try {
+        const { titleId } = body;
+        const { sectionId } = params;
+
+        const title = await Title.findByPk<TitleInstance>(titleId, { include: [Section] });
+        const seccion = await Section.findByPk<SectionInstance>(sectionId, { include: [Text] });
+
+        if (!title || !seccion) {
+            return handleHttp(res, 'Id incompatible', 400);
+        }
+
+        if (title.addSection && seccion.addTitle) {
+            await seccion.addTitle(title);
+            await title.reload({ include: [Section] });
+            res.send(title);
+            return;
+        }
+
+        return handleHttp(res, 'No associations', 400);
     } catch (error) {
         return handleHttp(res, `${error}`, 500);
     }

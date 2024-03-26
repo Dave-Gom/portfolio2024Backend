@@ -25,6 +25,7 @@ export interface SectionInstance extends Model<SectionInterface> {
     hasTitle?: (obj: TitleInstance) => Promise<boolean>;
     hasTitles?: (obj: TitleInstance[]) => Promise<boolean>;
     setTitles?: (obj: TitleInstance) => Promise<SectionInstance>;
+    addTitle?: (obj: TitleInstance) => Promise<SectionInstance>;
     addTitles?: (obj: TitleInstance[]) => Promise<SectionInstance>;
     removeTitle?: (obj: TitleInstance) => Promise<SectionInstance>;
     removeTitles?: (obj: TitleInstance[]) => Promise<SectionInstance>;
