@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+    addText,
     createSection,
     deleteSection,
     readSectionById,
@@ -15,5 +16,6 @@ router.get('/:id', readSectionById);
 router.post('/', checkSession, createSection);
 router.put('/:id', checkSession, updateSection);
 router.delete('/:id', checkSession, deleteSection);
+router.put('/addText/:textId', checkSession, addText);
 
 export { router };

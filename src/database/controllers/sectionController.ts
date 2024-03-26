@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import { Model } from 'sequelize';
 import { handleHttp } from '../../helpers/error.handler';
-import { SectionInterface } from '../../models/section';
+import { SectionInstance, SectionInterface } from '../../models/section';
+import { TextInstance } from '../../models/text';
 import { Section } from '../models/section';
+import { Text } from '../models/text';
 
 export const readSections = async (req: Request, res: Response) => {
     try {
@@ -78,6 +80,31 @@ export const deleteSection = async ({ body, params }: Request, res: Response) =>
         const text = await Section.destroy({ where: { id } });
         res.send({ message: 'eliminado', section: text });
         return;
+    } catch (error) {
+        return handleHttp(res, `${error}`, 500);
+    }
+};
+
+export const addText = async ({ body, params }: Request, res: Response) => {
+    try {
+        const { sectionId } = body;
+        const { textId } = params;
+
+        const texto = await Text.findByPk<TextInstance>(textId, { include: [Section] });
+        const seccion = await Section.findByPk<SectionInstance>(sectionId, { include: [Text] });
+
+        if (!texto || !seccion) {
+            return handleHttp(res, 'Id incompatible', 400);
+        }
+
+        if (texto.addSection && seccion.addText) {
+            await seccion.addText(texto);
+            await seccion.reload({ include: [Text] });
+            res.send({ seccion });
+            return;
+        }
+
+        return handleHttp(res, 'No associations', 400);
     } catch (error) {
         return handleHttp(res, `${error}`, 500);
     }
