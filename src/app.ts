@@ -22,8 +22,6 @@ const main = async () => {
 
     await sequelize.sync();
 
-    await sequelize.sync();
-
     seedLanguages();
 
     app.listen(3000, () => {
