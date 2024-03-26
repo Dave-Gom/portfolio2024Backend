@@ -1,7 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { TitleInterface } from '../../models/title';
 import { sequelize } from '../database';
-import { Language } from './language';
 
 const Title = sequelize.define<Model, TitleInterface>(
     'titles',
@@ -19,7 +18,5 @@ const Title = sequelize.define<Model, TitleInterface>(
         timestamps: true,
     }
 );
-
-Title.belongsTo(Language);
 
 export { Title };

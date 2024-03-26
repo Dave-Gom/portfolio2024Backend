@@ -8,9 +8,9 @@ import { Text } from '../models/text';
 
 export const createText = async ({ body }: Request, res: Response) => {
     try {
-        const hola = await Language.findByPk<Model<LanguageInterface>>(body.language, { include: [Text] });
-        if (hola) {
-            const newText = await Text.create<TextInstance>({ ...body, languageId: hola.dataValues.id });
+        const idioma = await Language.findByPk<Model<LanguageInterface>>(body.language, { include: [Text] });
+        if (idioma) {
+            const newText = await Text.create<TextInstance>({ ...body, languageId: idioma.dataValues.id });
             if (newText) {
                 res.send(newText);
                 return;

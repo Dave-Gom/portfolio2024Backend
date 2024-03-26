@@ -1,18 +1,24 @@
 import { Request, Response } from 'express';
 import { Model } from 'sequelize';
 import { handleHttp } from '../../helpers/error.handler';
-import { TitleInterface } from '../../models/title';
+import { LanguageInterface } from '../../models/language';
+import { TitleInstance, TitleInterface } from '../../models/title';
+import { Language } from '../models/language';
+import { Text } from '../models/text';
 import { Title } from '../models/title';
 
 export const createTitle = async ({ body }: Request, res: Response) => {
     try {
-        const newTitle = await Title.create<Model<TitleInterface>>(body);
-        if (newTitle) {
-            res.send(newTitle);
-            return;
+        const idioma = await Language.findByPk<Model<LanguageInterface>>(body.language, { include: [Text] });
+        if (idioma) {
+            const newTitle = await Title.create<TitleInstance>({ ...body, languageId: idioma.dataValues.id });
+            if (newTitle) {
+                res.send(newTitle);
+                return;
+            }
+            return handleHttp(res, undefined, 204);
         }
-
-        return handleHttp(res, undefined, 204);
+        return handleHttp(res, `Idioma incorrecto`, 400);
     } catch (error) {
         handleHttp(res, `${error}`, 500);
     }
@@ -20,7 +26,7 @@ export const createTitle = async ({ body }: Request, res: Response) => {
 
 export const readTitles = async ({ body }: Request, res: Response) => {
     try {
-        const title = await Title.findAll<Model<TitleInterface>>();
+        const title = await Title.findAll<Model<TitleInterface>>({ include: { all: true } });
         if (title) {
             res.send(title);
             return;
