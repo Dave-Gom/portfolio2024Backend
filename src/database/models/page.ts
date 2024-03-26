@@ -1,7 +1,6 @@
 import { DataType, Model } from 'sequelize-typescript';
 import { PageInterface } from '../../models/page';
 import { sequelize } from '../database';
-import { Section } from './section';
 
 const Page = sequelize.define<Model, PageInterface>(
     'pages',
@@ -21,7 +20,5 @@ const Page = sequelize.define<Model, PageInterface>(
         timestamps: true,
     }
 );
-
-Page.hasMany(Section);
 
 export { Page };

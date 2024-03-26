@@ -1,7 +1,6 @@
 import { DataType, Model } from 'sequelize-typescript';
 import { TextInterface } from '../../models/text';
 import { sequelize } from '../database';
-import { Language } from './language';
 
 const Text = sequelize.define<Model, TextInterface>(
     'texts',
@@ -19,7 +18,5 @@ const Text = sequelize.define<Model, TextInterface>(
         timestamps: true,
     }
 );
-
-Text.belongsTo(Language);
 
 export { Text };

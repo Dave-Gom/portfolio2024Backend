@@ -1,8 +1,8 @@
 import { DataType, Model } from 'sequelize-typescript';
-import { LaguageInterface } from '../../models/language';
+import { LanguageInterface } from '../../models/language';
 import { sequelize } from '../database';
 
-const Language = sequelize.define<Model, LaguageInterface>(
+const Language = sequelize.define<Model, LanguageInterface>(
     'languages',
     {
         id: {
