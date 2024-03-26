@@ -1,3 +1,4 @@
+import { Image } from './models/image';
 import { Language } from './models/language';
 import { Page } from './models/page';
 import { Section } from './models/section';
@@ -11,12 +12,15 @@ export const associate = () => {
     Language.hasMany(Title);
     Title.belongsTo(Language);
 
-    Section.hasMany(Text);
-    Text.belongsTo(Section);
+    Section.belongsToMany(Text, { through: 'sectionTexts' });
+    Text.belongsToMany(Section, { through: 'sectionTexts' });
 
-    Section.hasMany(Title);
-    Title.belongsTo(Section);
+    Section.belongsToMany(Title, { through: 'sectionTitles' });
+    Title.belongsToMany(Section, { through: 'sectionTitles' });
 
-    Page.hasMany(Section);
-    Section.belongsTo(Page);
+    Section.belongsToMany(Image, { through: 'sectionImages' });
+    Image.belongsToMany(Section, { through: 'sectionImages' });
+
+    Page.belongsToMany(Section, { through: 'pageSections' });
+    Section.belongsToMany(Page, { through: 'pageSections' });
 };

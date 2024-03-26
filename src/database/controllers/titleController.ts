@@ -12,6 +12,7 @@ export const createTitle = async ({ body }: Request, res: Response) => {
         const idioma = await Language.findByPk<Model<LanguageInterface>>(body.language, { include: [Text] });
         if (idioma) {
             const newTitle = await Title.create<TitleInstance>({ ...body, languageId: idioma.dataValues.id });
+
             if (newTitle) {
                 res.send(newTitle);
                 return;
