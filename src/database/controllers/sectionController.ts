@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import { Model } from 'sequelize';
 import { handleHttp } from '../../helpers/error.handler';
+import { ImageInstance } from '../../models/image';
 import { SectionInstance, SectionInterface } from '../../models/section';
 import { TextInstance } from '../../models/text';
 import { TitleInstance } from '../../models/title';
+import { Image } from '../models/image';
 import { Section } from '../models/section';
 import { Text } from '../models/text';
 import { Title } from '../models/title';
@@ -118,7 +120,7 @@ export const addTitle = async ({ body, params }: Request, res: Response) => {
         const { titleId } = params;
 
         const titulo = await Title.findByPk<TitleInstance>(titleId, { include: [Section] });
-        const seccion = await Section.findByPk<SectionInstance>(sectionId, { include: [Text] });
+        const seccion = await Section.findByPk<SectionInstance>(sectionId, { include: [Title] });
 
         if (!titulo || !seccion) {
             return handleHttp(res, 'Id incompatible', 400);
@@ -127,6 +129,31 @@ export const addTitle = async ({ body, params }: Request, res: Response) => {
         if (titulo.addSection && seccion.addTitle) {
             await seccion.addTitle(titulo);
             await seccion.reload({ include: [Title] });
+            res.send(seccion);
+            return;
+        }
+
+        return handleHttp(res, 'No associations', 400);
+    } catch (error) {
+        return handleHttp(res, `${error}`, 500);
+    }
+};
+
+export const addImage = async ({ body, params }: Request, res: Response) => {
+    try {
+        const { sectionId } = body;
+        const { imageId } = params;
+
+        const imagen = await Image.findByPk<ImageInstance>(imageId, { include: [Section] });
+        const seccion = await Section.findByPk<SectionInstance>(sectionId, { include: [Image] });
+
+        if (!imagen || !seccion) {
+            return handleHttp(res, 'Id incompatible', 400);
+        }
+
+        if (imagen.addSection && seccion.addImage) {
+            await seccion.addImage(imagen);
+            await seccion.reload({ include: [Image] });
             res.send(seccion);
             return;
         }
