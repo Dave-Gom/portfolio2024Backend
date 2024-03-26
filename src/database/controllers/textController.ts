@@ -8,40 +8,16 @@ import { Text } from '../models/text';
 
 export const createText = async ({ body }: Request, res: Response) => {
     try {
-        console.log(1);
         const hola = await Language.findByPk<Model<LanguageInterface>>(body.language, { include: [Text] });
-        console.log(2);
-        const newText = await Text.create<TextInstance>(body);
-        console.log(3);
-        const nueveTexto = await newText.reload({ include: [Language] });
-        console.log(4);
-        console.log(Text.associations);
-        console.log(Language.associations);
-
-        //@ts-ignore
-        if (nueveTexto.addlanguage) {
-            console.log('nuevoTexto');
+        if (hola) {
+            const newText = await Text.create<TextInstance>({ ...body, languageId: hola.dataValues.id });
+            if (newText) {
+                res.send(newText);
+                return;
+            }
+            return handleHttp(res, undefined, 204);
         }
-
-        console.log(
-            Object.getOwnPropertyDescriptors(nueveTexto),
-            Object.getOwnPropertyNames(nueveTexto),
-            Object.getOwnPropertySymbols(nueveTexto),
-            Object.getPrototypeOf(nueveTexto)
-        );
-
-        //@ts-ignore
-        if (nueveTexto.$set) {
-            console.log('existe $set');
-        }
-
-        if (nueveTexto && hola && nueveTexto.setLanguage) {
-            await nueveTexto.setLanguage(hola);
-            res.send(newText);
-            return;
-        }
-
-        return handleHttp(res, undefined, 204);
+        return handleHttp(res, `Idioma incorrecto`, 400);
     } catch (error) {
         handleHttp(res, `${error}`, 500);
     }
@@ -49,7 +25,7 @@ export const createText = async ({ body }: Request, res: Response) => {
 
 export const readTexts = async ({ body }: Request, res: Response) => {
     try {
-        const text = await Text.findAll<Model<TextInterface>>();
+        const text = await Text.findAll<Model<TextInterface>>({ include: { all: true } });
         if (text) {
             res.send(text);
             return;
